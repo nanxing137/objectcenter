@@ -76,3 +76,5 @@ gradle/
 gradlew
 gradlew.bat
 unused.txt
+.classpath
+.project
