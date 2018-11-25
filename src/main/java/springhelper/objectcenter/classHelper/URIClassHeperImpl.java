@@ -6,9 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 import springhelper.objectcenter.exception.ClassConstructorException;
 import springhelper.objectcenter.exception.ClassNewInstanceException;
 
-public class URIClassHeperImpl<T> implements URIClassHelper<T> {
+/**
+ * 访问控制使用默认即可</br>
+ * 用户面向接口
+ * 
+ * @author Thornhill
+ *
+ * @param <T>
+ */
+class URIClassHeperImpl<T> implements URIClassHelper<T> {
 	private final Class<T> clazz;
-	private Constructor<T> constructor;
+	private final Constructor<T> constructor;
 
 	public URIClassHeperImpl(Class<T> clazz) {
 		super();

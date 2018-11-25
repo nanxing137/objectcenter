@@ -1,4 +1,4 @@
-package springhelper.objectcenter.classloader;
+package springhelper.objectcenter.classHelper.classloader;
 
 /**
  * 自定义的利用URI进行类加载的类</br>
