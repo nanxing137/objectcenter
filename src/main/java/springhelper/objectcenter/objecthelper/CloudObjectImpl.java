@@ -4,12 +4,32 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import springhelper.objectcenter.exception.FieldNotFoundException;
+import springhelper.objectcenter.exception.MethodNotFoundException;
 
+/**
+ * 现在这个类大有问题</br>
+ * 反射全部改为添加缓存的实现</br>
+ * 
+ * @date 2018年11月26日
+ * @author Thornhill
+ *
+ * @param <T>
+ */
 public class CloudObjectImpl<T> implements CloudObject<T> {
 
 	private T t;
 	private Class<T> clazz;
 
+	/**
+	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
+	 */
+	private Field[] fields;
+	private Method[] methods;
+
+	/**
+	 * 重点在这个方法，好好想想怎么实现
+	 * 
+	 */
 	@Override
 	public Object invoke(String method) {
 		return null;
@@ -23,13 +43,14 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 
 	@Override
 	public Method getDeclaredMethod(String methodName, Class<?>... parameterTypes) {
+		Method declaredMethod = null;
 		try {
-			clazz.getDeclaredMethod(methodName, parameterTypes);
+			declaredMethod = clazz.getDeclaredMethod(methodName, parameterTypes);
 		} catch (NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new MethodNotFoundException("获取Method错误:", e);
 		}
-		return null;
+		return declaredMethod;
 	}
 
 	@Override
