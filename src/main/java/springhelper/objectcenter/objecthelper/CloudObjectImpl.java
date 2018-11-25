@@ -1,6 +1,6 @@
 package springhelper.objectcenter.objecthelper;
 
-public class ObjectHelperImpl implements ObjectHelper{
+public class CloudObjectImpl implements CloudObject{
 	
 	
 	

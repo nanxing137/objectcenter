@@ -1,5 +1,5 @@
 package springhelper.objectcenter.objecthelper;
 
-public interface ObjectHelper {
+public interface CloudObject {
 	Object invoke(String method);
 }

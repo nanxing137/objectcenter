@@ -1,5 +1,11 @@
 package springhelper.objectcenter.classloader;
 
+/**
+ * 自定义的利用URI进行类加载的类
+ * @date 2018年11月25日
+ * @author Thornhill
+ *
+ */
 public class URIClassLoader extends ClassLoader {
 	private byte[] classData;// class文件的URL
 

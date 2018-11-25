@@ -2,7 +2,8 @@ package springhelper.objectcenter;
 
 import java.lang.reflect.Method;
 
-import springhelper.objectcenter.objectergenter.ClassLoaderHelper;
+import springhelper.objectcenter.classHelper.URIClassHeperImpl;
+import springhelper.objectcenter.classloader.URIClassLoader;
 
 /**
  * Hello world!
@@ -10,9 +11,12 @@ import springhelper.objectcenter.objectergenter.ClassLoaderHelper;
  */
 public class App 
 {
-    public static void main( String[] args )
+    @SuppressWarnings({ "unused", "rawtypes", "unchecked" })
+	public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
         Method method;
+       URIClassLoader classLoader = new URIClassLoader(null);
+       URIClassHeperImpl uriClassHeperImpl = new URIClassHeperImpl(null);
     }
 }

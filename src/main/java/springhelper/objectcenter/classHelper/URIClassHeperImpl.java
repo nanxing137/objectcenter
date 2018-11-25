@@ -3,19 +3,45 @@ package springhelper.objectcenter.classHelper;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import springhelper.objectcenter.exception.ClassConstructorException;
+import springhelper.objectcenter.exception.ClassNewInstanceException;
 
-public class URIClassHeperImpl implements URIClassHelper{
-	private Class<?> clazz = null;
-	private Constructor<?> constructor;
-	@Override
-	public Object get() {
+public class URIClassHeperImpl<T> implements URIClassHelper<T> {
+	private final Class<T> clazz;
+	private Constructor<T> constructor;
+
+	public URIClassHeperImpl(Class<T> clazz) {
+		super();
+		this.clazz = clazz;
 		try {
-			constructor = clazz.getConstructor();
-			Object newInstance = constructor.newInstance();
-		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			this.constructor = clazz.getConstructor();
+		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
+			throw new ClassConstructorException("获取Constructor失败:", e);
 		}
-		return null;
 	}
-	
+
+	@Override
+	public T get() {
+		T newInstance = null;
+		try {
+			newInstance = constructor.newInstance();
+		} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+			throw new ClassNewInstanceException("构造类对象失败:", e);
+		}
+		return newInstance;
+	}
+
+	@Override
+	public Class<T> getURIClass() {
+		return clazz;
+	}
+
+	@Override
+	public Constructor<T> getURIConstructor() {
+		return constructor;
+	}
+
 }
