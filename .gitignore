@@ -35,6 +35,8 @@ hs_err_pid*
 */bin/
 */gen/
 */out/
+*/.settings/
+*/target/
   
 # Gradle files
 .gradle/
