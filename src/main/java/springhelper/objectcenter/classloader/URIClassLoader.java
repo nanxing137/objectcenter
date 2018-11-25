@@ -11,6 +11,11 @@ package springhelper.objectcenter.classloader;
  *
  */
 public class URIClassLoader extends ClassLoader {
+	
+	// todu 实现类加载
+	// 甚至重新设置构造函数或者之类的
+	// 并且增加缓存
+	
 	private byte[] classData;// class文件的URL
 
 	public URIClassLoader(byte[] data) {

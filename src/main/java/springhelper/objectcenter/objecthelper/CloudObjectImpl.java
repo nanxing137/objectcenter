@@ -17,6 +17,7 @@ import springhelper.objectcenter.exception.MethodNotFoundException;
  */
 public class CloudObjectImpl<T> implements CloudObject<T> {
 
+	// todu 增加缓存
 	private T t;
 	private Class<T> clazz;
 
