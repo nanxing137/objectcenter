@@ -1,5 +1,8 @@
 package springhelper.objectcenter.objecthelper;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 /**
  * 所有从URIClassLoader获取的对象都有的包装类</br>
  * 这个类持有加载到的Class对象</br>
@@ -12,5 +15,21 @@ package springhelper.objectcenter.objecthelper;
  * @param <T>
  */
 public interface CloudObject<T> {
+	/**
+	 * 执行方法
+	 * 
+	 * @param method
+	 * @return
+	 */
 	Object invoke(String method);
+
+	Method[] getDeclaredMethods();
+
+
+	Field[] getDeclaredFields();
+
+	Field getDeclaredField(String fieldName);
+
+	Method getDeclaredMethod(String methodName, Class<?>... parameterTypes);
+
 }

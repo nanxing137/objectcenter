@@ -17,6 +17,8 @@ public interface URIClassHelper<T> {
 	 */
 	T get();
 
+	
+	
 	/**
 	 * 获取Class对象
 	 * 
