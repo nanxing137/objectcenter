@@ -1,9 +1,7 @@
 package springhelper.objectcenter.objecthelper;
 
-public class CloudObjectImpl implements CloudObject{
-	
-	
-	
+
+public class CloudObjectImpl<T> implements CloudObject<T>{
 	
 	
 	@Override
