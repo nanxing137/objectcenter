@@ -14,7 +14,7 @@ import springhelper.objectcenter.exception.ClassNewInstanceException;
  *
  * @param <T>
  */
-class URIClassHeperImpl<T> implements URIClassHelper<T> {
+public class URIClassHeperImpl<T> implements URIClassHelper<T> {
 	private final Class<T> clazz;
 	private final Constructor<T> constructor;
 
