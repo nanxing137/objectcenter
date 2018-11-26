@@ -36,6 +36,9 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 		return null;
 	}
 
+	/**
+	 * 下面的一系列方法也需要修改，修改为增加缓存版本
+	 */
 	@Override
 	public Method[] getDeclaredMethods() {
 		Method[] declaredMethods = clazz.getDeclaredMethods();
