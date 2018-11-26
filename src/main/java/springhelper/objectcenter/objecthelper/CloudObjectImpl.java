@@ -20,9 +20,15 @@ import springhelper.objectcenter.exception.MethodNotFoundException;
  */
 public class CloudObjectImpl<T> implements CloudObject<T> {
 
-	// todu 增加缓存
+	// TODO 增加缓存
 	private T t;
 	private Class<T> clazz;
+
+	/**
+	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
+	 */
+	private Map<String, Field> fieldMap;
+	private Map<String, Map<Class<?>[], Method>> methodMap;
 
 	public CloudObjectImpl(T t, Class<T> clazz) {
 		super();
@@ -39,24 +45,26 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 		Method[] declaredMethods = this.clazz.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			Class<?>[] parameterTypes = method.getParameterTypes();
+			
 			methodMap.putIfAbsent(method.getName(), new HashMap<Class<?>[], Method>());
 			Map<Class<?>[], Method> putIfAbsent = methodMap.get(method.getName());
 			putIfAbsent.put(parameterTypes, method);
+			
+			
 //			HashMap<Class<?>[], Method> hashMap = new HashMap<Class<?>[], Method>();
 //			hashMap.put(parameterTypes, method);
-//			methodMap.merge(method.getName(), hashMap, (t1, t2) -> {
-//				t1.putAll(t2);
-//				return t1;
-//			});
+//			methodMap.merge(method.getName(),hashMap , (t1,t2)->{ t1.putAll(t2);return t1;});
+			
+			
+			// HashMap<Class<?>[], Method> hashMap = new HashMap<Class<?>[], Method>();
+			// hashMap.put(parameterTypes, method);
+			// methodMap.merge(method.getName(), hashMap, (t1, t2) -> {
+			// t1.putAll(t2);
+			// return t1;
+			// });
 
 		}
 	}
-
-	/**
-	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
-	 */
-	private Map<String, Field> fieldMap;
-	private Map<String, Map<Class<?>[], Method>> methodMap;
 
 	/**
 	 * 重点在这个方法，好好想想怎么实现
