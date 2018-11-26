@@ -28,25 +28,26 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 		super();
 		this.t = t;
 		this.clazz = clazz;
-		// 先行获取Field，放入缓存，因为Field只读不写 ，所以不考虑线程问题
+		// 先行获取Field，放入缓存，因为Field只读不写 ，所以不考虑同步问题
 		Field[] declaredFields = this.clazz.getDeclaredFields();
 		fieldMap = new HashMap<>(declaredFields.length);
 		for (Field field : declaredFields) {
 			fieldMap.put(field.getName(), field);
 		}
-		// 天秀的一个MethodMap
+		// 天秀的一个MethodMap,不会涉及同步写，所以不考虑同步问题
 		methodMap = new HashMap<String, Map<Class<?>[], Method>>();
 		Method[] declaredMethods = this.clazz.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			Class<?>[] parameterTypes = method.getParameterTypes();
-			methodMap.merge(method.getName(), new HashMap<Class<?>[], Method>() {
-				{
-					put(parameterTypes, method);
-				}
-			}, (t1, t2) -> {
-				t1.putAll(t2);
-				return t1;
-			});
+			methodMap.putIfAbsent(method.getName(), new HashMap<Class<?>[], Method>());
+			Map<Class<?>[], Method> putIfAbsent = methodMap.get(method.getName());
+			putIfAbsent.put(parameterTypes, method);
+//			HashMap<Class<?>[], Method> hashMap = new HashMap<Class<?>[], Method>();
+//			hashMap.put(parameterTypes, method);
+//			methodMap.merge(method.getName(), hashMap, (t1, t2) -> {
+//				t1.putAll(t2);
+//				return t1;
+//			});
 
 		}
 	}
@@ -54,7 +55,6 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 	/**
 	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
 	 */
-	private Method[] methods;
 	private Map<String, Field> fieldMap;
 	private Map<String, Map<Class<?>[], Method>> methodMap;
 
