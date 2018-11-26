@@ -2,6 +2,8 @@ package springhelper.objectcenter.classHelper;
 
 import java.lang.reflect.Constructor;
 
+import springhelper.objectcenter.objecthelper.CloudObject;
+
 /**
  * 类加载器加载出来的自定义Class封装
  * 
@@ -15,7 +17,7 @@ public interface URIClassHelper<T> {
 	 * 
 	 * @return
 	 */
-	T get();
+	CloudObject<T> get();
 
 	
 	

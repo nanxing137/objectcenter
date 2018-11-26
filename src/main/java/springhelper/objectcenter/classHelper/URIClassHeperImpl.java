@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import springhelper.objectcenter.exception.ClassConstructorException;
 import springhelper.objectcenter.exception.ClassNewInstanceException;
+import springhelper.objectcenter.objecthelper.CloudObject;
+import springhelper.objectcenter.objecthelper.CloudObjectImpl;
 
 /**
  * 访问控制使用默认即可</br>
@@ -30,7 +32,7 @@ public class URIClassHeperImpl<T> implements URIClassHelper<T> {
 	}
 
 	@Override
-	public T get() {
+	public CloudObject<T> get() {
 		T newInstance = null;
 		try {
 			newInstance = constructor.newInstance();
@@ -39,7 +41,9 @@ public class URIClassHeperImpl<T> implements URIClassHelper<T> {
 			e.printStackTrace();
 			throw new ClassNewInstanceException("构造类对象失败:", e);
 		}
-		return newInstance;
+		// tudo 这里将对象装载入CloudObject
+		CloudObject<T> cloudObject = new CloudObjectImpl<>(newInstance,clazz);
+		return cloudObject;
 	}
 
 	@Override

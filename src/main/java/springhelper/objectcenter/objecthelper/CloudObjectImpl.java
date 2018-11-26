@@ -2,6 +2,8 @@ package springhelper.objectcenter.objecthelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import springhelper.objectcenter.exception.FieldNotFoundException;
 import springhelper.objectcenter.exception.MethodNotFoundException;
@@ -20,13 +22,21 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 	// todu 增加缓存
 	private T t;
 	private Class<T> clazz;
+	
+	public CloudObjectImpl(T t, Class<T> clazz) {
+		super();
+		this.t = t;
+		this.clazz = clazz;
+		methodMap = new HashMap<String, Method>();
+	}
 
 	/**
 	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
 	 */
-	private Field[] fields;
 	private Method[] methods;
-
+	private Map<String, Field> fieldMap;
+	private Map<String, Method> methodMap;
+	
 	/**
 	 * 重点在这个方法，好好想想怎么实现
 	 * 
