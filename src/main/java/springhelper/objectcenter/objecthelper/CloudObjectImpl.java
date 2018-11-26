@@ -2,6 +2,7 @@ package springhelper.objectcenter.objecthelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +23,32 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 	// todu 增加缓存
 	private T t;
 	private Class<T> clazz;
-	
+
 	public CloudObjectImpl(T t, Class<T> clazz) {
 		super();
 		this.t = t;
 		this.clazz = clazz;
-		methodMap = new HashMap<String, Method>();
+		// 先行获取Field，放入缓存，因为Field只读不写 ，所以不考虑线程问题
+		Field[] declaredFields = this.clazz.getDeclaredFields();
+		fieldMap = new HashMap<>(declaredFields.length);
+		for (Field field : declaredFields) {
+			fieldMap.put(field.getName(), field);
+		}
+		// 天秀的一个MethodMap
+		methodMap = new HashMap<String, Map<Class<?>[], Method>>();
+		Method[] declaredMethods = this.clazz.getDeclaredMethods();
+		for (Method method : declaredMethods) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			methodMap.merge(method.getName(), new HashMap<Class<?>[], Method>() {
+				{
+					put(parameterTypes, method);
+				}
+			}, (t1, t2) -> {
+				t1.putAll(t2);
+				return t1;
+			});
+
+		}
 	}
 
 	/**
@@ -35,8 +56,8 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 	 */
 	private Method[] methods;
 	private Map<String, Field> fieldMap;
-	private Map<String, Method> methodMap;
-	
+	private Map<String, Map<Class<?>[], Method>> methodMap;
+
 	/**
 	 * 重点在这个方法，好好想想怎么实现
 	 * 
