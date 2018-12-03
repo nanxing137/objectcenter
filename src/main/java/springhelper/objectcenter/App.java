@@ -1,15 +1,6 @@
 package springhelper.objectcenter;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import springhelper.objectcenter.classHelper.URIClassHeperImpl;
-import springhelper.objectcenter.classloader.URIClassLoader;
 
 /**
  * Hello world!

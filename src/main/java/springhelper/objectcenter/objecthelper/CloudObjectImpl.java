@@ -12,7 +12,7 @@ import springhelper.objectcenter.exception.MethodNotFoundException;
 /**
  * 现在这个类大有问题</br>
  * 反射全部改为添加缓存的实现</br>
- * 
+ * 设计使用外观模式
  * @date 2018年11月26日
  * @author Thornhill
  *
