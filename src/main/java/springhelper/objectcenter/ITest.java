@@ -9,32 +9,41 @@ import springhelper.objectcenter.exception.FieldNotFoundException;
 import springhelper.objectcenter.exception.MethodNotFoundException;
 import springhelper.objectcenter.objecthelper.CloudObject;
 
+/**
+ * TODO</br>
+ * 看看能不能去掉外观模式</br>
+ * 使用default接口的方法
+ * 
+ * @author Thornhill
+ *
+ * @param <T>
+ */
 public interface ITest<T> extends CloudObject<T> {
 
 	// TODO 增加缓存
 	// 其实不需要他，如果使用继承，实现接口的形式，直接传递this即可
 	// final T t;
 
-	Class<?> clazz;
+	Class<?> clazz = null;
 
 	/**
 	 * 暂时将这两个域写成这样，后续可能用map或者其他实现，重点是添加缓存
 	 */
-	Map<String, Field> fieldMap;
-	Map<String, Map<Class<?>[], Method>> methodMap;
+	Map<String, Field> fieldMap = null;
+	Map<String, Map<Class<?>[], Method>> methodMap = null;
 
 	default void Init() {
 
-		this.clazz = this.getClass();
-		t = null;
+//		this.clazz = this.getClass();
+//		t = null;
 		// 先行获取Field，放入缓存，因为Field只读不写 ，所以不考虑同步问题
 		Field[] declaredFields = this.clazz.getDeclaredFields();
-		fieldMap = new HashMap<>(declaredFields.length);
+//		fieldMap = new HashMap<>(declaredFields.length);
 		for (Field field : declaredFields) {
 			fieldMap.put(field.getName(), field);
 		}
 		// 天秀的一个MethodMap,不会涉及同步写，所以不考虑同步问题
-		methodMap = new HashMap<String, Map<Class<?>[], Method>>();
+//		methdMap = new HashMap<String, Map<Class<?>[], Method>>();
 		Method[] declaredMethods = this.clazz.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			Class<?>[] parameterTypes = method.getParameterTypes();
