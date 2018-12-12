@@ -10,16 +10,17 @@ import springhelper.objectcenter.objecthelper.CloudObject;
  * 一切故事的开始</br>
  * 对用户的唯一入口</br>
  * 后期可以从这里结合URI</br>
+ * 
  * @author Thornhill
  *
  * @param <T>
  */
 public interface ClassLoaderHelper<T> {
 
+	@SuppressWarnings("unchecked")
 	static <T> URIClassHelper<T> get(String name, byte[] bytes) {
 		ClassLoader classLoader = new URIClassLoader(bytes);
 		Class<T> loadClass = null;
-
 		try {
 			loadClass = (Class<T>) classLoader.loadClass(name);
 		} catch (Throwable e) {

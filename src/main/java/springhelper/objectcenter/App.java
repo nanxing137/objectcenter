@@ -1,22 +1,32 @@
 package springhelper.objectcenter;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-<<<<<<< HEAD
-=======
 import java.net.URLClassLoader;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-
+import springhelper.objectcenter.classHelper.URIClassHelper;
 import springhelper.objectcenter.classHelper.URIClassHeperImpl;
+import springhelper.objectcenter.classgenter.ClassLoaderHelper;
 import springhelper.objectcenter.classloader.URIClassLoader;
->>>>>>> c2628cf1f30b66ba7527d4a44c830f7bbea2e664
+import springhelper.objectcenter.objecthelper.CloudObject;
 
 /**
  * Hello world!
@@ -31,7 +41,7 @@ public class App {
 	
 	@SuppressWarnings({ "unused", "rawtypes", "unchecked", "resource" })
 	public static void main(String[] args)
-			throws NoSuchMethodException, SecurityException, NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
+			throws NoSuchMethodException, SecurityException, NoSuchFieldException, IllegalAccessException, ClassNotFoundException, IOException, IllegalArgumentException, InvocationTargetException {
 //		System.out.println("Hello World!");
 //		Method method;
 //		URIClassLoader classLoader = new URIClassLoader(null);
@@ -42,21 +52,15 @@ public class App {
 //		Lookup lookup = MethodHandles.lookup();
 //		MethodHandle findGetter = lookup.findGetter(null, null, null);
 //
-		var s = "s";
-		var temp = new App();
+		String string = "C:\\Users\\Thornhill\\Desktop\\temp\\C1.class";
+		Path path = Paths.get(string);
+		BufferedReader newBufferedReader = Files.newBufferedReader(path);
+		InputStream newInputStream = Files.newInputStream(path);
+		byte[] readAllBytes = newInputStream.readAllBytes();
 		
-		var urlClassLoader = new URLClassLoader(null);
-		Class<?> loadClass = urlClassLoader.loadClass(null);
-		ExecutorService executorService = null;
-		executorService.execute(null);
-		executorService.submit(null,null);
+		URIClassHelper<Object> uriClassHelper = ClassLoaderHelper.get("C1", readAllBytes);
+		CloudObject<Object> cloudObject = uriClassHelper.get();
 		
-		
-		var s1 = new String("hh");
-		var s2 = new String("hh");
-		System.out.println(s1==s2);
-		System.out.println(s1.hashCode());
-		System.out.println(s2.hashCode());
 		
 	}
 }
