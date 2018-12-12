@@ -2,7 +2,6 @@ package springhelper.objectcenter.objecthelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import springhelper.objectcenter.exception.MethodNotFoundException;
  * 现在这个类大有问题</br>
  * 反射全部改为添加缓存的实现</br>
  * 设计使用外观模式
+ * 
  * @date 2018年11月26日
  * @author Thornhill
  *
@@ -54,8 +54,8 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 	}
 
 	/**
-	 *  重点在这个方法，好好想想怎么实现
-	 *  
+	 * 重点在这个方法，好好想想怎么实现
+	 * 
 	 */
 	@Override
 	public Object invoke(String method) {
@@ -100,6 +100,46 @@ public class CloudObjectImpl<T> implements CloudObject<T> {
 		}
 
 		return declaredField;
+	}
+
+	/**
+	 * 一下重写所有Object的方法
+	 */
+
+	/*
+	 * 伪装为实例对象
+	 */
+	@Override
+	public int hashCode() {
+		return t.hashCode();
+	}
+
+	/*
+	 * 如果都是CloudObject对比内部的t</br> 否则单独对比t和参数对象
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CloudObject) {
+			return hashCode() == obj.hashCode();
+		}
+		return t.equals(obj);
+	}
+
+	/*
+	 * 支持克隆
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+
+		return super.clone();
+	}
+
+	/*
+	 * 使用t的toString()
+	 */
+	@Override
+	public String toString() {
+		return t.toString();
 	}
 
 }
